@@ -1,0 +1,23 @@
+local function HighlightPlayers()
+  for i, v in pairs(game.Players:GetPlayers()) do
+    if v ~= game.LocalPlayer then
+      local humanoidRootPart = v.Character:WaitForChild("HumanoidRootPart") 
+      local highlight = Instance.new("Highlight", humanoidRootPart)
+      highlight.OutlineColor = Color3.new(1, 0, 0) -- Red highlight
+      highlight.FillTransparency = 0.5 -- Semi-transparent fill
+    end
+  end
+end
+
+game.Players.PlayerAdded:Connect(HighlightPlayers)
+game.Players.PlayerRemoving:Connect(function()
+  for i, v in pairs(game.Players:GetPlayers()) do
+    if v ~= game.LocalPlayer then
+      local humanoidRootPart = v.Character:WaitForChild("HumanoidRootPart")
+      local highlight = humanoidRootPart:FindFirstChild("Highlight")
+      if highlight then
+        highlight:Destroy()
+      end
+    end
+  end
+end)
